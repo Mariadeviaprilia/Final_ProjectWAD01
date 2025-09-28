@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TugasKu — Login</title>
+
+  <!-- Font (fallbacks if blocked) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F9FAFB;
+      --card: #FFFFFF;
+      --primary: #2563EB;
+      /* biru */
+      --accent: #16A34A;
+      /* hijau */
+      --muted: #6B7280;
+      --danger: #DC2626;
+      --glass: rgba(37, 99, 235, 0.06);
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+      --transition: 200ms cubic-bezier(.2, .9, .3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg), #eef2ff);
+      color: #111827;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Page layout */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    /* Card */
+    .auth-card {
+      width: 100%;
+      max-width: 920px;
+      background: linear-gradient(180deg, var(--card), #fbfdff);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 0;
+    }
+
+    /* Left visual panel */
+    .panel {
+      padding: 36px;
+      background: radial-gradient(circle at 10% 10%, var(--glass), transparent 30%), linear-gradient(180deg, #ffffff, #f7fbff);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: var(--primary);
+      display: inline-grid;
+      place-items: center;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      color: white;
+    }
+
+    .app-name {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--primary);
+      letter-spacing: -0.2px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .hero-illustration {
+      margin-top: 12px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 16px;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(22, 163, 74, 0.03));
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      box-shadow: inset 0 -6px 20px rgba(2, 6, 23, 0.02);
+    }
+
+    .hero-illustration .big {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero-illustration .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Right form panel */
+    .form-panel {
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    form {
+      margin-top: 6px;
+      display: grid;
+      gap: 12px;
+    }
+
+    /* Input style */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      background: transparent;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.09);
+      transform: translateY(-1px);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Password toggle */
+    .pw-wrap {
+      position: relative;
+    }
+
+    .pw-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pw-toggle:focus {
+      outline: 2px solid rgba(37, 99, 235, 0.12);
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), #1D4ED8);
+      color: white;
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.16);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .remember {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .remember input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e6eefc, transparent);
+      margin: 8px 0;
+      border-radius: 6px;
+    }
+
+    /* Social */
+    .socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .socials .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
+    .btn-google {
+      background: white;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.03);
+    }
+
+    .btn-apple {
+      background: #0f172a;
+      color: white;
+    }
+
+    /* Small helper text & errors */
+    .helper {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 13px;
+      display: none;
+    }
+
+    /* Footer */
+    .signup {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Responsive */
+    @media (max-width:880px) {
+      .auth-card {
+        grid-template-columns: 1fr;
+        max-width: 740px;
+      }
+
+      .panel {
+        order: 2;
+        padding: 22px;
+      }
+
+      .form-panel {
+        order: 1;
+        padding: 22px;
+      }
+
+      .logo {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    @media (max-width:420px) {
+      .hero-illustration .big {
+        font-size: 22px;
+      }
+
+      .app-name {
+        font-size: 18px;
+      }
+    }
+
+    /* micro animations for success */
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(22, 163, 74, 0.12), rgba(22, 163, 74, 0.06));
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 13px;
+      align-self: flex-start;
+      transform-origin: center;
+      transform: scale(0.98);
+      opacity: 0;
+      transition: all 220ms ease;
+    }
+
+    .success-badge.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="auth-card" role="main" aria-labelledby="login-title">
+      <!-- Left visual / branding -->
+      <div class="panel" aria-hidden="false">
+        <div class="brand" aria-hidden="true">
+          <div class="logo" aria-hidden="true">
+            <!-- simple checkmark icon -->
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div>
+            <div class="app-name">TugasKu</div>
+            <div class="tagline">Kelola tugas harianmu dengan mudah & efisien</div>
+          </div>
+        </div>
+
+        <div class="hero-illustration" aria-hidden="true">
+          <div>
+            <div class="big">Fokus. Selesaikan. Raih.</div>
+            <div class="small">Atur prioritas, tetapkan deadline, dan tandai tugas yang selesai — semua dalam satu
+              tempat.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="helper">Tip cepat: Gunakan <strong>Prioritas</strong> untuk memfilter tugas penting.</div>
+        </div>
+      </div>
+
+      <!-- Right form -->
+      <div class="form-panel">
+        <div>
+          <div id="login-title" class="title">Selamat Datang</div>
+          <div class="subtitle">Masuk untuk melanjutkan ke TugasKu</div>
+        </div>
+
+        <form id="loginForm" action="/login" method="POST">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="contoh@domain.com" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Kata Sandi</label>
+            <input id="password" name="password" type="password" placeholder="Masukkan kata sandi" required />
+          </div>
+
+          <button class="btn btn-primary" type="submit">Masuk</button>
+
+          <div class="actions">
+            <label class="remember"><input type="checkbox" id="remember" /> Ingat saya</label>
+            <a href="#" id="forgot" class="helper">Lupa kata sandi?</a>
+          </div>
+
+          <div class="sep" aria-hidden="true"></div>
+
+        </form>
+
+        <div style="margin-top:8px;" class="signup">
+          Belum punya akun? <a href="register.html">Daftar sekarang</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Basic interactive behavior: validation, show/hide password, demo login, success microanimation
+    (function () {
+      const form = document.getElementById('loginForm');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const emailError = document.getElementById('emailError');
+      const pwError = document.getElementById('pwError');
+      const pwToggle = document.getElementById('pwToggle');
+      const btnDemo = document.getElementById('btnDemo');
+      const successBadge = document.getElementById('successBadge');
+      const btnSubmit = document.getElementById('btnSubmit');
+
+      // helper: validate email regex
+      function validEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+
+      // Show / hide password
+      pwToggle.addEventListener('click', () => {
+        const type = password.type === 'password' ? 'text' : 'password';
+        password.type = type;
+        pwToggle.textContent = type === 'password' ? 'Tampilkan' : 'Sembunyikan';
+        pwToggle.setAttribute('aria-pressed', type === 'text');
+        password.focus();
+      });
+
+      // Demo login autofill
+      btnDemo.addEventListener('click', () => {
+        email.value = 'demo@tugasku.app';
+        password.value = 'demopassword';
+        // small visual feedback
+        btnDemo.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }], { duration: 220 });
+      });
+
+      // Form submit handler
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let ok = true;
+
+        // reset errors
+        emailError.style.display = 'none';
+        pwError.style.display = 'none';
+
+        if (!validEmail(email.value.trim())) {
+          emailError.style.display = 'block';
+          email.focus();
+          ok = false;
+        }
+
+        if (password.value.length < 6) {
+          pwError.style.display = 'block';
+          if (ok) password.focus();
+          ok = false;
+        }
+
+        if (!ok) return;
+
+        // Simulate async login (fake)
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Memproses...';
+
+        setTimeout(() => {
+          // success micro animation
+          successBadge.classList.add('show');
+          // restore button
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Masuk';
+
+          // optionally, auto redirect or close modal in a real app
+          setTimeout(() => successBadge.classList.remove('show'), 2200);
+        }, 800);
+      });
+
+      // accessibility: submit on Enter from password
+      password.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') form.dispatchEvent(new Event('submit', { cancelable: true }));
+      });
+
+      // simple progressive enhancement: clear error when user types
+      [email, password].forEach(el => {
+        el.addEventListener('input', () => {
+          if (el === email && validEmail(email.value)) emailError.style.display = 'none';
+          if (el === password && password.value.length >= 6) pwError.style.display = 'none';
+        });
+      });
+
+    })();
+  </script>
+</body>
+
+</html>

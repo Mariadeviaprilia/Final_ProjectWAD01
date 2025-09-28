@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taskify - Home</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h1 {
+        color: #fff;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #f0f0f0;
+        margin-bottom: 30px;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 15px;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease;
+        text-align: center;
+      }
+
+      .btn-login {
+        background: #ffffff;
+        color: #4facfe;
+      }
+
+      .btn-login:hover {
+        background: #e6e6e6;
+        transform: scale(1.05);
+      }
+
+      .btn-register {
+        background: #ff7eb3;
+        color: #fff;
+      }
+
+      .btn-register:hover {
+        background: #e06a9f;
+        transform: scale(1.05);
+      }
+
+      .btn-dashboard {
+        background: #43e97b;
+        color: #fff;
+      }
+
+      .btn-dashboard:hover {
+        background: #36c767;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Selamat Datang di TugasKu 🎉</h1>
+    <p>Aplikasi To-Do List sederhana dengan login & register</p>
+
+    <div class="btn-group">
+      <a href="/login"><button class="btn btn-login">🔑 Login</button></a>
+      <a href="/register"
+        ><button class="btn btn-register">📝 Register</button></a
+      >
+      <a href="/dashboard"
+        ><button class="btn btn-dashboard">📋 Dashboard</button></a
+      >
+    </div>
+  </body>
+</html>
